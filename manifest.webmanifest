@@ -1,0 +1,19 @@
+{
+  "name": "Control de gastos",
+  "short_name": "Gastos",
+  "description": "App personal para registrar ingresos, gastos, presupuestos y metas de ahorro.",
+  "start_url": "./control-gastos.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f1",
+  "theme_color": "#127452",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
