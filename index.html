@@ -490,6 +490,136 @@
       display: none !important;
     }
 
+    .pro-shell {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .pro-tabs {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 10px;
+      z-index: 3;
+    }
+
+    .pro-tab {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 850;
+      min-height: 42px;
+      padding: 8px 10px;
+    }
+
+    .pro-tab.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    [data-theme="dark"] .pro-tab.active {
+      color: #0d1510;
+    }
+
+    .pro-view {
+      display: none;
+    }
+
+    .pro-view.active {
+      display: grid;
+      gap: 14px;
+    }
+
+    .pro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .pro-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pro-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+
+    .pro-form.compact {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    }
+
+    .pro-card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pro-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .pro-item-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pro-item-title {
+      font-weight: 900;
+    }
+
+    .pro-item-meta {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .pro-kpi {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      padding: 13px;
+    }
+
+    .pro-kpi span {
+      color: var(--muted);
+      display: block;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .pro-kpi strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-top: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .pro-note {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
     @media (max-width: 980px) {
       header, .main-grid {
         grid-template-columns: 1fr;
@@ -502,6 +632,14 @@
       .summary, .charts {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .pro-tabs {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .pro-grid, .pro-grid.two, .pro-form, .pro-form.compact {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 680px) {
@@ -512,6 +650,15 @@
       }
 
       .summary, .charts, .form-row, .filters, .tools-grid, .form-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .pro-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        position: static;
+      }
+
+      .pro-grid, .pro-grid.two, .pro-form, .pro-form.compact {
         grid-template-columns: 1fr;
       }
 
@@ -747,6 +894,111 @@
         </article>
       </section>
     </section>
+
+    <section class="pro-shell" aria-label="Centro financiero pro">
+      <nav class="pro-tabs">
+        <button class="pro-tab active" data-pro-view="resumen" type="button">Resumen PRO</button>
+        <button class="pro-tab" data-pro-view="fijos" type="button">Gastos fijos</button>
+        <button class="pro-tab" data-pro-view="metas" type="button">Metas</button>
+        <button class="pro-tab" data-pro-view="tarjetas" type="button">Tarjetas</button>
+        <button class="pro-tab" data-pro-view="cuentas" type="button">Cuentas</button>
+        <button class="pro-tab" data-pro-view="deudas" type="button">Deudas</button>
+        <button class="pro-tab" data-pro-view="anual" type="button">Anual</button>
+      </nav>
+
+      <section class="pro-view active" id="pro-resumen">
+        <article class="panel panel-pad">
+          <div class="panel-title">
+            <h2>Centro financiero PRO</h2>
+          </div>
+          <div class="pro-grid">
+            <div class="pro-kpi"><span>Score financiero</span><strong id="proScore">0</strong></div>
+            <div class="pro-kpi"><span>Compromisos proximos</span><strong id="proDueSoon">0</strong></div>
+            <div class="pro-kpi"><span>Deuda registrada</span><strong id="proDebtTotal">S/ 0.00</strong></div>
+          </div>
+          <p class="pro-note" id="proAdvice">Agrega gastos fijos, tarjetas, cuentas y deudas para obtener una lectura mas completa.</p>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-fijos">
+        <article class="panel panel-pad">
+          <div class="panel-title">
+            <h2>Gastos fijos</h2>
+            <button class="btn soft" id="generateFixedBtn" type="button">Generar del mes</button>
+          </div>
+          <form class="pro-form" id="fixedForm">
+            <div><label>Nombre</label><input id="fixedName" required placeholder="Internet, alquiler"></div>
+            <div><label>Categoria</label><select id="fixedCategory"></select></div>
+            <div><label>Monto</label><input id="fixedAmount" required type="number" min="0.01" step="0.01"></div>
+            <div><label>Dia</label><input id="fixedDay" required type="number" min="1" max="31" value="1"></div>
+            <button class="btn primary" type="submit">Agregar fijo</button>
+          </form>
+          <div class="pro-card-list" id="fixedList"></div>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-metas">
+        <article class="panel panel-pad">
+          <div class="panel-title"><h2>Metas de ahorro</h2></div>
+          <form class="pro-form" id="savingGoalForm">
+            <div><label>Meta</label><input id="savingGoalName" required placeholder="Viaje, emergencia"></div>
+            <div><label>Objetivo</label><input id="savingGoalTarget" required type="number" min="1" step="0.01"></div>
+            <div><label>Ahorrado</label><input id="savingGoalSaved" type="number" min="0" step="0.01" value="0"></div>
+            <div><label>Fecha objetivo</label><input id="savingGoalDate" type="date"></div>
+            <button class="btn primary" type="submit">Agregar meta</button>
+          </form>
+          <div class="pro-card-list" id="savingGoalList"></div>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-tarjetas">
+        <article class="panel panel-pad">
+          <div class="panel-title"><h2>Tarjetas de credito</h2></div>
+          <form class="pro-form" id="cardForm">
+            <div><label>Tarjeta</label><input id="cardName" required placeholder="BCP Visa"></div>
+            <div><label>Linea credito</label><input id="cardLimit" type="number" min="0" step="0.01"></div>
+            <div><label>Dia corte</label><input id="cardCutDay" type="number" min="1" max="31"></div>
+            <div><label>Dia pago</label><input id="cardPayDay" type="number" min="1" max="31"></div>
+            <button class="btn primary" type="submit">Agregar tarjeta</button>
+          </form>
+          <div class="pro-card-list" id="cardList"></div>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-cuentas">
+        <article class="panel panel-pad">
+          <div class="panel-title"><h2>Cuentas y billeteras</h2></div>
+          <form class="pro-form compact" id="accountForm">
+            <div><label>Cuenta</label><input id="accountName" required placeholder="Efectivo, banco, Yape"></div>
+            <div><label>Tipo</label><select id="accountType"><option>Efectivo</option><option>Banco</option><option>Billetera</option><option>Inversion</option></select></div>
+            <div><label>Saldo</label><input id="accountBalance" type="number" step="0.01" value="0"></div>
+            <button class="btn primary" type="submit">Agregar cuenta</button>
+          </form>
+          <div class="pro-card-list" id="accountList"></div>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-deudas">
+        <article class="panel panel-pad">
+          <div class="panel-title"><h2>Prestamos y deudas</h2></div>
+          <form class="pro-form" id="debtForm">
+            <div><label>Nombre</label><input id="debtName" required placeholder="Prestamo banco"></div>
+            <div><label>Tipo</label><select id="debtType"><option>Por pagar</option><option>Por cobrar</option></select></div>
+            <div><label>Saldo</label><input id="debtAmount" required type="number" min="0.01" step="0.01"></div>
+            <div><label>Vence</label><input id="debtDue" type="date"></div>
+            <button class="btn primary" type="submit">Agregar deuda</button>
+          </form>
+          <div class="pro-card-list" id="debtList"></div>
+        </article>
+      </section>
+
+      <section class="pro-view" id="pro-anual">
+        <article class="panel panel-pad">
+          <div class="panel-title"><h2>Dashboard anual</h2></div>
+          <div class="bars" id="annualBars"></div>
+        </article>
+      </section>
+    </section>
   </main>
 
   <script>
@@ -765,6 +1017,11 @@
       budgets: {},
       goals: {},
       categoryBudgets: {},
+      fixedExpenses: [],
+      savingGoals: [],
+      cards: [],
+      accounts: [],
+      debts: [],
       month: new Date().toISOString().slice(0, 7),
       theme: "light",
       type: "expense",
@@ -811,7 +1068,24 @@
       importBtn: $("#importBtn"),
       importFile: $("#importFile"),
       clearMonthBtn: $("#clearMonthBtn"),
-      resetBtn: $("#resetBtn")
+      resetBtn: $("#resetBtn"),
+      fixedForm: $("#fixedForm"),
+      fixedCategory: $("#fixedCategory"),
+      fixedList: $("#fixedList"),
+      generateFixedBtn: $("#generateFixedBtn"),
+      savingGoalForm: $("#savingGoalForm"),
+      savingGoalList: $("#savingGoalList"),
+      cardForm: $("#cardForm"),
+      cardList: $("#cardList"),
+      accountForm: $("#accountForm"),
+      accountList: $("#accountList"),
+      debtForm: $("#debtForm"),
+      debtList: $("#debtList"),
+      annualBars: $("#annualBars"),
+      proScore: $("#proScore"),
+      proDueSoon: $("#proDueSoon"),
+      proDebtTotal: $("#proDebtTotal"),
+      proAdvice: $("#proAdvice")
     };
 
     function uid() {
@@ -826,6 +1100,11 @@
           budgets: saved.budgets || {},
           goals: saved.goals || {},
           categoryBudgets: saved.categoryBudgets || {},
+          fixedExpenses: Array.isArray(saved.fixedExpenses) ? saved.fixedExpenses : [],
+          savingGoals: Array.isArray(saved.savingGoals) ? saved.savingGoals : [],
+          cards: Array.isArray(saved.cards) ? saved.cards : [],
+          accounts: Array.isArray(saved.accounts) ? saved.accounts : [],
+          debts: Array.isArray(saved.debts) ? saved.debts : [],
           theme: saved.theme || "light"
         });
         return;
@@ -853,6 +1132,21 @@
       state.budgets[month] = 1500;
       state.goals[month] = 300;
       state.categoryBudgets[month] = { Comida: 420, Transporte: 180, Casa: 520, Servicios: 220 };
+      state.fixedExpenses = [
+        { id: uid(), name: "Internet", category: "Servicios", amount: 89.9, day: 12 },
+        { id: uid(), name: "Transporte base", category: "Transporte", amount: 120, day: 1 }
+      ];
+      state.savingGoals = [
+        { id: uid(), name: "Fondo de emergencia", target: 3000, saved: 850, date: `${month.slice(0, 4)}-12-31` }
+      ];
+      state.cards = [
+        { id: uid(), name: "Visa principal", limit: 2500, cutDay: 15, payDay: 28 }
+      ];
+      state.accounts = [
+        { id: uid(), name: "Efectivo", type: "Efectivo", balance: 200 },
+        { id: uid(), name: "Banco", type: "Banco", balance: 1200 }
+      ];
+      state.debts = [];
     }
 
     function save() {
@@ -861,6 +1155,11 @@
         budgets: state.budgets,
         goals: state.goals,
         categoryBudgets: state.categoryBudgets,
+        fixedExpenses: state.fixedExpenses,
+        savingGoals: state.savingGoals,
+        cards: state.cards,
+        accounts: state.accounts,
+        debts: state.debts,
         theme: state.theme
       }));
     }
@@ -910,6 +1209,9 @@
 
     function syncCategoryOptions() {
       els.category.innerHTML = categoriesForCurrentType().map(name => `<option>${name}</option>`).join("");
+      if (els.fixedCategory) {
+        els.fixedCategory.innerHTML = expenseCategories.map(name => `<option>${name}</option>`).join("");
+      }
       const allCats = [...new Set([...expenseCategories, ...incomeCategories])];
       els.categoryFilter.innerHTML = `<option value="all">Todas</option>${allCats.map(name => `<option>${name}</option>`).join("")}`;
       els.categoryFilter.value = state.filters.category;
@@ -1016,6 +1318,150 @@
       });
     }
 
+    function parseDateSafe(value) {
+      return value ? new Date(`${value}T12:00:00`) : new Date();
+    }
+
+    function daysUntil(day) {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const target = new Date(now.getFullYear(), now.getMonth(), Number(day || 1));
+      if (target < today) target.setMonth(target.getMonth() + 1);
+      return Math.ceil((target - today) / 86400000);
+    }
+
+    function renderProItems() {
+      const cardDebt = state.entries
+        .filter(item => item.type === "expense" && item.payment === "Tarjeta")
+        .reduce((sum, item) => sum + Number(item.amount), 0);
+      const debtTotal = state.debts.reduce((total, debt) => total + Number(debt.amount), 0);
+      const accountTotal = state.accounts.reduce((total, account) => total + Number(account.balance), 0);
+      const monthExpenses = sum(getMonthEntries(), "expense");
+      const budget = Number(state.budgets[state.month] || 0);
+      const dueSoon = [
+        ...state.fixedExpenses.filter(item => daysUntil(item.day) <= 5),
+        ...state.cards.filter(item => item.payDay && daysUntil(item.payDay) <= 5),
+        ...state.debts.filter(item => item.due && (parseDateSafe(item.due) - new Date()) / 86400000 <= 5)
+      ].length;
+      const score = Math.max(0, Math.min(100,
+        85 + (accountTotal > debtTotal ? 8 : -8) + (budget && monthExpenses <= budget ? 7 : -12) - dueSoon * 4
+      ));
+
+      els.proScore.textContent = Math.round(score);
+      els.proDueSoon.textContent = dueSoon;
+      els.proDebtTotal.textContent = currency.format(debtTotal + cardDebt);
+      els.proAdvice.textContent = score >= 80
+        ? "Vas bien: tu flujo se mantiene ordenado. Revisa pagos proximos y sigue alimentando tus metas."
+        : score >= 55
+          ? "Hay margen de ajuste: mira presupuesto, deudas y gastos fijos antes de cerrar el mes."
+          : "Atencion: prioriza pagos proximos, reduce gastos variables y evita sumar deuda nueva.";
+
+      renderFixedExpenses();
+      renderSavingGoals();
+      renderCards();
+      renderAccounts();
+      renderDebts();
+      renderAnnual();
+    }
+
+    function renderFixedExpenses() {
+      els.fixedList.innerHTML = state.fixedExpenses.length ? "" : `<div class="empty">No hay gastos fijos.</div>`;
+      state.fixedExpenses.forEach(item => {
+        const node = document.createElement("div");
+        node.className = "pro-item";
+        node.innerHTML = `
+          <div class="pro-item-head">
+            <div><div class="pro-item-title">${item.name}</div><div class="pro-item-meta">${item.category} - dia ${item.day}</div></div>
+            <button class="mini-btn danger" data-pro-delete="fixedExpenses:${item.id}" type="button">x</button>
+          </div>
+          <div class="track"><div class="fill" style="width:${Math.max(4, Math.min(100, 100 - daysUntil(item.day) * 3))}%"></div></div>
+          <strong>${currency.format(Number(item.amount))}</strong>
+        `;
+        els.fixedList.appendChild(node);
+      });
+    }
+
+    function renderSavingGoals() {
+      els.savingGoalList.innerHTML = state.savingGoals.length ? "" : `<div class="empty">No hay metas registradas.</div>`;
+      state.savingGoals.forEach(item => {
+        const pctValue = item.target ? Math.min((Number(item.saved) / Number(item.target)) * 100, 100) : 0;
+        const node = document.createElement("div");
+        node.className = "pro-item";
+        node.innerHTML = `
+          <div class="pro-item-head">
+            <div><div class="pro-item-title">${item.name}</div><div class="pro-item-meta">${item.date || "Sin fecha objetivo"}</div></div>
+            <button class="mini-btn danger" data-pro-delete="savingGoals:${item.id}" type="button">x</button>
+          </div>
+          <div class="track"><div class="fill" style="width:${pctValue}%"></div></div>
+          <strong>${currency.format(Number(item.saved))} de ${currency.format(Number(item.target))}</strong>
+        `;
+        els.savingGoalList.appendChild(node);
+      });
+    }
+
+    function renderCards() {
+      els.cardList.innerHTML = state.cards.length ? "" : `<div class="empty">No hay tarjetas.</div>`;
+      state.cards.forEach(card => {
+        const spent = state.entries
+          .filter(item => item.type === "expense" && item.payment === "Tarjeta")
+          .reduce((total, item) => total + Number(item.amount), 0);
+        const usage = card.limit ? Math.min((spent / Number(card.limit)) * 100, 100) : 0;
+        const node = document.createElement("div");
+        node.className = "pro-item";
+        node.innerHTML = `
+          <div class="pro-item-head">
+            <div><div class="pro-item-title">${card.name}</div><div class="pro-item-meta">Corte ${card.cutDay || "-"} - Pago ${card.payDay || "-"}</div></div>
+            <button class="mini-btn danger" data-pro-delete="cards:${card.id}" type="button">x</button>
+          </div>
+          <div class="track"><div class="fill" style="width:${usage}%; background:var(--blue)"></div></div>
+          <strong>${currency.format(spent)} de ${currency.format(Number(card.limit || 0))}</strong>
+        `;
+        els.cardList.appendChild(node);
+      });
+    }
+
+    function renderAccounts() {
+      els.accountList.innerHTML = state.accounts.length ? "" : `<div class="empty">No hay cuentas.</div>`;
+      state.accounts.forEach(account => {
+        const node = document.createElement("div");
+        node.className = "pro-item";
+        node.innerHTML = `
+          <div class="pro-item-head">
+            <div><div class="pro-item-title">${account.name}</div><div class="pro-item-meta">${account.type}</div></div>
+            <button class="mini-btn danger" data-pro-delete="accounts:${account.id}" type="button">x</button>
+          </div>
+          <strong>${currency.format(Number(account.balance))}</strong>
+        `;
+        els.accountList.appendChild(node);
+      });
+    }
+
+    function renderDebts() {
+      els.debtList.innerHTML = state.debts.length ? "" : `<div class="empty">No hay deudas o prestamos.</div>`;
+      state.debts.forEach(debt => {
+        const node = document.createElement("div");
+        node.className = "pro-item";
+        node.innerHTML = `
+          <div class="pro-item-head">
+            <div><div class="pro-item-title">${debt.name}</div><div class="pro-item-meta">${debt.type} - vence ${debt.due || "sin fecha"}</div></div>
+            <button class="mini-btn danger" data-pro-delete="debts:${debt.id}" type="button">x</button>
+          </div>
+          <strong>${currency.format(Number(debt.amount))}</strong>
+        `;
+        els.debtList.appendChild(node);
+      });
+    }
+
+    function renderAnnual() {
+      const year = state.month.slice(0, 4);
+      const months = Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, "0")}`);
+      const rows = months.map(month => {
+        const items = state.entries.filter(item => item.date.startsWith(month));
+        return [month.slice(5), sum(items, "income") - sum(items, "expense")];
+      });
+      renderBars(els.annualBars, rows, "Agrega movimientos para ver el resumen anual.");
+    }
+
     function render() {
       const entries = getMonthEntries();
       const filtered = getFilteredEntries();
@@ -1038,6 +1484,7 @@
       renderBars(els.dayBars, days, "Agrega movimientos para ver días.");
       renderCategoryBudgets(entries);
       renderRows(filtered);
+      renderProItems();
     }
 
     function resetForm() {
@@ -1187,7 +1634,12 @@
         entries: state.entries,
         budgets: state.budgets,
         goals: state.goals,
-        categoryBudgets: state.categoryBudgets
+        categoryBudgets: state.categoryBudgets,
+        fixedExpenses: state.fixedExpenses,
+        savingGoals: state.savingGoals,
+        cards: state.cards,
+        accounts: state.accounts,
+        debts: state.debts
       }, null, 2);
       download(`respaldo-gastos-${state.month}.json`, data, "application/json;charset=utf-8");
     });
@@ -1202,9 +1654,125 @@
       state.budgets = data.budgets || state.budgets;
       state.goals = data.goals || state.goals;
       state.categoryBudgets = data.categoryBudgets || state.categoryBudgets;
+      state.fixedExpenses = Array.isArray(data.fixedExpenses) ? data.fixedExpenses : state.fixedExpenses;
+      state.savingGoals = Array.isArray(data.savingGoals) ? data.savingGoals : state.savingGoals;
+      state.cards = Array.isArray(data.cards) ? data.cards : state.cards;
+      state.accounts = Array.isArray(data.accounts) ? data.accounts : state.accounts;
+      state.debts = Array.isArray(data.debts) ? data.debts : state.debts;
       save();
       render();
       els.importFile.value = "";
+    });
+
+    document.querySelector(".pro-tabs").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-pro-view]");
+      if (!button) return;
+      document.querySelectorAll(".pro-tab").forEach(tab => tab.classList.toggle("active", tab === button));
+      document.querySelectorAll(".pro-view").forEach(view => view.classList.toggle("active", view.id === `pro-${button.dataset.proView}`));
+    });
+
+    document.querySelector(".pro-shell").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-pro-delete]");
+      if (!button) return;
+      const [collection, id] = button.dataset.proDelete.split(":");
+      if (!Array.isArray(state[collection])) return;
+      state[collection] = state[collection].filter(item => item.id !== id);
+      save();
+      render();
+    });
+
+    els.fixedForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.fixedExpenses.push({
+        id: uid(),
+        name: $("#fixedName").value.trim(),
+        category: $("#fixedCategory").value,
+        amount: Number($("#fixedAmount").value),
+        day: Number($("#fixedDay").value)
+      });
+      els.fixedForm.reset();
+      $("#fixedDay").value = 1;
+      save();
+      render();
+    });
+
+    els.generateFixedBtn.addEventListener("click", () => {
+      state.fixedExpenses.forEach(item => {
+        const day = String(Math.min(Number(item.day || 1), 28)).padStart(2, "0");
+        const date = `${state.month}-${day}`;
+        const exists = state.entries.some(entry => entry.fixedId === item.id && entry.date.startsWith(state.month));
+        if (!exists) {
+          state.entries.push({
+            id: uid(),
+            fixedId: item.id,
+            type: "expense",
+            description: item.name,
+            amount: Number(item.amount),
+            date,
+            category: item.category,
+            payment: "Transferencia"
+          });
+        }
+      });
+      save();
+      render();
+    });
+
+    els.savingGoalForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.savingGoals.push({
+        id: uid(),
+        name: $("#savingGoalName").value.trim(),
+        target: Number($("#savingGoalTarget").value),
+        saved: Number($("#savingGoalSaved").value || 0),
+        date: $("#savingGoalDate").value
+      });
+      els.savingGoalForm.reset();
+      $("#savingGoalSaved").value = 0;
+      save();
+      render();
+    });
+
+    els.cardForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.cards.push({
+        id: uid(),
+        name: $("#cardName").value.trim(),
+        limit: Number($("#cardLimit").value || 0),
+        cutDay: Number($("#cardCutDay").value || 0),
+        payDay: Number($("#cardPayDay").value || 0)
+      });
+      els.cardForm.reset();
+      save();
+      render();
+    });
+
+    els.accountForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.accounts.push({
+        id: uid(),
+        name: $("#accountName").value.trim(),
+        type: $("#accountType").value,
+        balance: Number($("#accountBalance").value || 0)
+      });
+      els.accountForm.reset();
+      $("#accountBalance").value = 0;
+      save();
+      render();
+    });
+
+    els.debtForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.debts.push({
+        id: uid(),
+        name: $("#debtName").value.trim(),
+        type: $("#debtType").value,
+        amount: Number($("#debtAmount").value),
+        due: $("#debtDue").value
+      });
+      els.debtForm.reset();
+      save();
+      render();
     });
 
     els.clearMonthBtn.addEventListener("click", () => {
